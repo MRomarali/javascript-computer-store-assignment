@@ -2,7 +2,7 @@ const computersElement = document.getElementById("computers");
 const computerDescription = document.getElementById("description");
 const computerSpec = document.getElementById("specs");
 const priceElement = document.getElementById("price");
-const addElement = document.getElementById("add");
+//const addElement = document.getElementById("add");
 const cartElement = document.getElementById("cart");
 const quantityElement = document.getElementById("quantity");
 const payElement = document.getElementById("pay");
@@ -22,6 +22,8 @@ const addComputersToMenu = (computers) => {
  computerDescription.innerText = computers[0].description;
  computerSpec.innerText = computers[0].specs;
  priceElement.innerText = computers[0].price;
+imgElement.src = "https://noroff-komputer-store-api.herokuapp.com/assets/images/1.png";
+
 }
 const addTitleToMenu = (computer) => {
     const computerElement = document.createElement("option");
@@ -72,17 +74,19 @@ let paidAmount = 0;
 const handlePay = () => {
     paidAmount = parseFloat(computers[computersElement.selectedIndex].price) - money;
     if (paidAmount <= 0) {
-    money -= parseFloat(computers[computersElement.selectedIndex].price);
-    loanElement.innerText = money + "kr";
-        let greeting = alert("Thank you for shopping with us! and welcome back ");
+        money -= parseFloat(computers[computersElement.selectedIndex].price);
+        //loanElement.innerText = money + "kr";
+        bankElement.innerText = money + "kr";
+        alert("Thank you for shopping with us! and welcome back ");
     }else{
-        let sorry = alert("you can't afford "); 
+        alert("you can't afford "); 
     }
 }
 
 computersElement.addEventListener("change", handleComputerMenuChange);
 computersElement.addEventListener("change", handleDescriptionMenuChange);
 computersElement.addEventListener("change", handleSpecsMenuChange);
-addElement.addEventListener("click", handleAddComputer);
+//addElement.addEventListener("click", handleAddComputer);
 payElement.addEventListener("click", handlePay);
+
 
