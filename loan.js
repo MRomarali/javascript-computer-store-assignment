@@ -24,7 +24,15 @@ const handlerepayMenuChange = e => {
     const selectedComputer = computers[e.target.selectedIndex];
     repayElement.innerText = selectedComputer.repay;
 }
-
+const hideButton = () => {
+    loanElement.innerText = loan + "kr";
+    const bankElement = document.getElementById("bank");
+    const workElement = document.getElementById("work");
+    bankElement.innerText = money + "kr";
+    workElement.innerText = workMoney + "kr";
+    paybackButtonElement.classList.add("hidden");
+    repayButtonElement.classList.add("hidden");     
+}
 const handlePayback = e => {
 
     const payAmount = prompt("how much loan do you want? ");
@@ -41,9 +49,6 @@ const handlePayback = e => {
             money += exessMoney - payAmount;
             loan = 0;
             
-            loanElement.innerText = loan + "kr";
-            const bankElement = document.getElementById("bank");
-            bankElement.innerText = money + "kr";
             return;
         
         }
@@ -52,6 +57,7 @@ const handlePayback = e => {
         money -= payAmount; // interest;
         console.log("loan: " + loan);
         console.log("money: " + money);
+
         
     }
     // if (payAmount > loan) {
@@ -61,6 +67,10 @@ const handlePayback = e => {
     //     console.log("loan: " + loan);
     //     console.log("money: " + money);
     // }
+    if (loan === 0) {
+            hideButton();
+            
+    }
 
     loanElement.innerText = loan + "kr";
     const bankElement = document.getElementById("bank");
@@ -84,8 +94,8 @@ const handleLoan = e => {
     }else if (loanAmount <= money*2) {
         loan += parseFloat(loanAmount);
         money += loan;
-        paybackButtonElement.classList.add("show");
-        repayButtonElement.classList.add("show");
+        paybackButtonElement.classList.remove("hidden");
+        repayButtonElement.classList.remove("hidden");
         alert(`Your loan: ${ loan.toFixed(2) }`);
     }
     
@@ -99,26 +109,27 @@ const handleLoan = e => {
 
 
 const handleRepay = e => {
-
+    const payAmount = workMoney;
     if (payAmount === null) {
         payAmount = 0;
     }
-    if (payAmount <= money) {
+    if (payAmount <= workMoney) {
 
         console.log("first if");
 
         if (loan - payAmount < 0) {
             console.log("second if");
             const exessMoney = (loan - payAmount) * -1;
-            money += exessMoney;
+            workMoney += exessMoney - payAmount;
             loan = 0;
+            hideButton();
             return;
         }
         const interest = payAmount - (payAmount*0.1);
         loan -= payAmount;// interest;
-        money -= payAmount; // interest;
+        workMoney -= payAmount; // interest;
         console.log("loan: " + loan);
-        console.log("money: " + money);
+        console.log("money: " + workMoney);
         
     }
     // if (payAmount > loan) {
@@ -128,13 +139,16 @@ const handleRepay = e => {
     //     console.log("loan: " + loan);
     //     console.log("money: " + money);
     // }
+    if (payAmount > loan) {
+        loan -= payAmount
+    }
     if (loan === 0) {
-        repayButtonElement.classList.add("hidden");
+        hideButton();
     }
 
     loanElement.innerText = (loan) + "kr";
-    const bankElement = document.getElementById("bank");
-    bankElement.innerText = money + "kr";
+    const workElement= document.getElementById("work");
+    workElement.innerText = workMoney + "kr";
     
 }
 
@@ -142,3 +156,6 @@ const handleRepay = e => {
 loanButtonElement.addEventListener("click", handleLoan);
 loanElement.addEventListener("click", handleLoan);
 paybackButtonElement.addEventListener("click", handlePayback);
+repayButtonElement.addEventListener("click", handleRepay);
+paybackButtonElement.classList.add("hidden");
+repayButtonElement.classList.add("hidden");
