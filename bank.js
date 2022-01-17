@@ -13,18 +13,18 @@ const handleBankMenuChange = e => {
     bankElement.innerText = selectedComputer.bank;
 }
 
-let change = 0;
+let workMoney = 0;
 const handleWork = e => {
     const ernedMoney = 100;
-    loan += parseFloat(ernedMoney);
-    workElement.innerText = (loan) + "kr";
+    workMoney += parseFloat(ernedMoney);
+    workElement.innerText = (workMoney) + "kr";
 }
 let money = 0;
 const handleBank = e => {
-	money += loan;
-	loan = 0;
+	money += workMoney;
+	workMoney = 0;
     bankElement.innerText = (money) + "kr";
-	workElement.innerText = (loan) + "kr";
+	workElement.innerText = (workMoney) + "kr";
 	console.log(money);
 }
 
