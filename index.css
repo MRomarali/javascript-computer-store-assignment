@@ -57,3 +57,12 @@ text-align: center;
 #pay {
     background-color: lightskyblue;
 }
+
+.hidden {
+    display: none;
+}
+.show {
+    display: inline;
+}
+
+

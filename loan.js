@@ -38,24 +38,29 @@ const handlePayback = e => {
         if (loan - payAmount < 0) {
             console.log("second if");
             const exessMoney = (loan - payAmount) * -1;
-            money += exessMoney;
+            money += exessMoney - payAmount;
             loan = 0;
+            
+            loanElement.innerText = loan + "kr";
+            const bankElement = document.getElementById("bank");
+            bankElement.innerText = money + "kr";
             return;
+        
         }
         const interest = payAmount - (payAmount*0.1);
-        loan -= interest;
-        money -= interest;
+        loan -= payAmount; //  interest;
+        money -= payAmount; // interest;
         console.log("loan: " + loan);
         console.log("money: " + money);
         
     }
-    if (payAmount > loan) {
-        const interest = payAmount - (payAmount*0.1);
-        loan -= interest;
-        money -= interest;
-        console.log("loan: " + loan);
-        console.log("money: " + money);
-    }
+    // if (payAmount > loan) {
+    //     const interest = payAmount - (payAmount*0.1);
+    //     loan -= payAmount; // interest;
+    //     money -= payAmount; // interest;
+    //     console.log("loan: " + loan);
+    //     console.log("money: " + money);
+    // }
 
     loanElement.innerText = loan + "kr";
     const bankElement = document.getElementById("bank");
@@ -65,6 +70,7 @@ const handlePayback = e => {
 
 
 const handleLoan = e => {
+    
     if (loan > 0) {
         alert(" you cant take a loan, payback " + loan);
         return;
@@ -78,7 +84,8 @@ const handleLoan = e => {
     }else if (loanAmount <= money*2) {
         loan += parseFloat(loanAmount);
         money += loan;
-        //paybackButtonElement.style.display = "inline";
+        paybackButtonElement.classList.add("show");
+        repayButtonElement.classList.add("show");
         alert(`Your loan: ${ loan.toFixed(2) }`);
     }
     
@@ -108,18 +115,21 @@ const handleRepay = e => {
             return;
         }
         const interest = payAmount - (payAmount*0.1);
-        loan -= interest;
-        money -= interest;
+        loan -= payAmount;// interest;
+        money -= payAmount; // interest;
         console.log("loan: " + loan);
         console.log("money: " + money);
         
     }
-    if (payAmount > loan) {
-        const interest = payAmount - (payAmount*0.1);
-        loan -= interest;
-        money -= interest;
-        console.log("loan: " + loan);
-        console.log("money: " + money);
+    // if (payAmount > loan) {
+    //     const interest = payAmount - (payAmount*0.1);
+    //     loan -= payAmount; // interest;
+    //     money -= payAmount; // interest;
+    //     console.log("loan: " + loan);
+    //     console.log("money: " + money);
+    // }
+    if (loan === 0) {
+        repayButtonElement.classList.add("hidden");
     }
 
     loanElement.innerText = (loan) + "kr";
