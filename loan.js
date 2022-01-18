@@ -71,9 +71,9 @@ const handlePayback = e => {
             return;
         
         }
-        const interest = payAmount - (payAmount*0.1);
-        loan -= payAmount +  interest;
-        money -= payAmount + interest;
+        const interest = (payAmount*0.1);
+        loan -= parseFloat(payAmount)+ interest;
+        money -= parseFloat(payAmount)+ interest;
     }
     if (loan === 0) {
             hideButton();
@@ -133,31 +133,40 @@ const handleLoan = e => {
  * and the rest is taken from the balance if there is money there
  */
 const handleRepay = e => {
-    const payAmount = workMoney;
-    if (payAmount === null) {
-        payAmount = 0;
+    if (workMoney === null) {
+        workMoney = 0;
     }
-    if (payAmount <= workMoney) {
+    if (workMoney <= loan) {
 
         console.log("first if");
 
-        if (loan - payAmount < 0) {
+        if (loan - workMoney < 0) {
             console.log("second if");
-            const exessMoney = (loan - payAmount) * -1;
-            workMoney += exessMoney - payAmount;
+            const exessMoney = (loan - workMoney) * -1;
+            workMoney += exessMoney - workMoney;
             loan = 0;
-            hideButton();
+            workMoney = 0;
+            hideButton(); 
             return;
         }
-        const interest = payAmount - (payAmount*0.1);
-        loan -= payAmount;
-        workMoney -= payAmount;
+        const interest = (workMoney*0.1);
+        loan -= parseFloat(workMoney)- interest;
+        workMoney -= parseFloat(loan + interest);
+        workMoney = 0;
         console.log("loan: " + loan);
         console.log("money: " + workMoney);
         
     }
-    if (payAmount > loan) {
-        loan -= payAmount
+    if (workMoney > loan) {
+        loan -= workMoney
+    }
+    if (loan <= 0) {
+        const exessMoney = (loan - workMoney);
+        console.log("excess" + exessMoney);
+        console.log(workMoney);
+            workMoney = (exessMoney + workMoney)* -1;
+            loan = 0;
+            hideButton(); 
     }
     if (loan === 0) {
         hideButton();
