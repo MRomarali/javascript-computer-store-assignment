@@ -150,8 +150,8 @@ const handleRepay = e => {
             return;
         }
         const interest = payAmount - (payAmount*0.1);
-        loan -= payAmount + interest;
-        workMoney -= payAmount + interest;
+        loan -= payAmount;
+        workMoney -= payAmount;
         console.log("loan: " + loan);
         console.log("money: " + workMoney);
         
