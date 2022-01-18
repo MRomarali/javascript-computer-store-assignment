@@ -1,1 +1,0 @@
-# javascript-computer-store-assignment
