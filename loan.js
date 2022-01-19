@@ -72,19 +72,26 @@ const handlePayback = e => {
         
         }
         const interest = (payAmount*0.1);
-        loan -= parseFloat(payAmount)+ interest;
+        loan -= parseFloat(payAmount)- interest;
         money -= parseFloat(payAmount)+ interest;
     }
     if (loan === 0) {
             hideButton();
             
-    }
+        }
+        loan = loan.toFixed(2);
+        loanElement.innerText = loan + "kr";    
+        const bankElement = document.getElementById("bank");
+        bankElement.innerText = money + "kr";
+    
 
-    loanElement.innerText = loan + "kr";
-    const bankElement = document.getElementById("bank");
-    bankElement.innerText = money + "kr";
+    
     
 }
+// const setBalance = (element, amount) => {
+//     if(amount % 1 != 0) amount = amount.toFixed(2);
+//     element.innerText = amount + " kr";
+// }
 
 /**
  * 
@@ -97,7 +104,7 @@ const handlePayback = e => {
 const handleLoan = e => {
     
     if (loan > 0) {
-        alert(" you cant take a loan, payback " + loan);
+        alert(" you cant take a loan, payback " + loan + " kr ");
         return;
     }
     const loanAmount = prompt("how much loan do you want? ");
@@ -114,13 +121,12 @@ const handleLoan = e => {
         alert(`Your loan: ${ loan.toFixed(2) }`);
     }
     
-    console.log(loanAmount);
-    console.log(loan);
     loanElement.innerText = loan + "kr";
     
     const bankElement = document.getElementById("bank");
     bankElement.innerText = money + "kr";
 }
+
 
 /**
  * 
@@ -162,17 +168,15 @@ const handleRepay = e => {
     }
     if (loan <= 0) {
         const exessMoney = (loan - workMoney);
-        console.log("excess" + exessMoney);
-        console.log(workMoney);
-            workMoney = (exessMoney + workMoney)* -1;
-            loan = 0;
-            hideButton(); 
+        workMoney = (exessMoney + workMoney)* -1;
+        loan = 0;
+        hideButton(); 
     }
     if (loan === 0) {
         hideButton();
     }
 
-    loanElement.innerText = (loan) + "kr";
+    loanElement.innerText = (loan) + " kr";
     const workElement= document.getElementById("work");
     workElement.innerText = workMoney + "kr";
     
